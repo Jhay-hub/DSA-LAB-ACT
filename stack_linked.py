@@ -31,7 +31,8 @@ class LinkedStack:
         Keep a running count. Walking the list to answer size() would make an
         O(1) question cost O(n).
         """
-        raise NotImplementedError("Step 1: set self._top to None and self._size to 0")
+        self._top = None
+        self._size = 0
 
     def push(self, item):
         """Step 2. New node on the front, then update the count.
@@ -39,7 +40,9 @@ class LinkedStack:
         Order matters. Build the node pointing at the current top FIRST,
         then move self._top. Reverse the two lines and you lose the list.
         """
-        raise NotImplementedError("Step 2: make a Node whose next is the old top, then move self._top")
+        new_node = Node(item, self._top)
+        self._top = new_node
+        self._size += 1
 
     def pop(self):
         """Step 3. Remove and return the value at the top.
@@ -47,19 +50,26 @@ class LinkedStack:
         Guard for empty with IndexError. Hold the node, move self._top to
         its next, decrement the count, then return the value.
         """
-        raise NotImplementedError("Step 3: guard for empty, unlink the head node, return its value")
+        if self.is_empty():
+            raise IndexError("pop from an empty stack")
+        node = self._top
+        self._top = node.next
+        self._size -= 1
+        return node.value
 
     def peek(self):
         """Step 4. Return the top value without unlinking anything."""
-        raise NotImplementedError("Step 4: guard for empty, then return the value at self._top")
+        if self.is_empty():
+            raise IndexError("peek from an empty stack")
+        return self._top.value
 
     def is_empty(self):
         """Step 5. True when there is no top node."""
-        raise NotImplementedError("Step 5: return whether self._top is None")
+        return self._top is None
 
     def size(self):
         """Step 6. Return the running count, not a walk of the list."""
-        raise NotImplementedError("Step 6: return self._size")
+        return self._size
 
     def __len__(self):
         """Written for you."""
